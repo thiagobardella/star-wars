@@ -1,15 +1,13 @@
 package com.starWars.challenge.model;
 
-import java.util.List;
-
-public class SWPlanet {
+public class PlanetInput {
 
     private String name;
     private String climate;
     private String terrain;
     private int filmsCount;
 
-    public SWPlanet(String name, String climate, String terrain, int filmsCount) {
+    public PlanetInput(String name, String climate, String terrain, int filmsCount) {
         this.name = name;
         this.climate = climate;
         this.terrain = terrain;

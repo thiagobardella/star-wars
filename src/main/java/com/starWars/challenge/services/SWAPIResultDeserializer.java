@@ -17,23 +17,20 @@ public class SWAPIResultDeserializer implements JsonDeserializer<SWAPIResult> {
         final JsonObject jsonObject = json.getAsJsonObject();
 
         final int count = jsonObject.get("count").getAsInt();
-        //TODO(get just the final part to mount my own)
-        final String previous = jsonObject.get("previous").isJsonNull() ? null : jsonObject.get("previous").getAsString();
-        final String next = jsonObject.get("next").isJsonNull() ? null : jsonObject.get("next").getAsString();
-        final JsonArray results = jsonObject.get("results").getAsJsonArray();
+        final int lastPage = (count%10 != 0) ? count/10 + 1 : count/10;
 
+        final JsonArray results = jsonObject.get("results").getAsJsonArray();
         List<SWPlanet> swPlanets = new ArrayList<>();
         results.forEach(planet -> {
                 JsonObject planetJson = planet.getAsJsonObject();
                 String planetName = planetJson.get("name").getAsString();
                 String planetClimate = planetJson.get("climate").getAsString();
                 String planetTerrain = planetJson.get("terrain").getAsString();
-                //TODO(correct it for films Count)
-                List<String> planetFilms = new ArrayList<>();
-                swPlanets.add(new SWPlanet(planetName, planetClimate, planetTerrain, planetFilms));
+                int planetFilmsCount = planetJson.get("films").getAsJsonArray().size();
+                swPlanets.add(new SWPlanet(planetName, planetClimate, planetTerrain, planetFilmsCount));
             }
         );
 
-        return new SWAPIResult(count, next, previous, new ArrayList<>());
+        return new SWAPIResult(count, lastPage, swPlanets);
     }
 }

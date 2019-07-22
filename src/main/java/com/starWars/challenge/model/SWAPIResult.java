@@ -5,28 +5,21 @@ import java.util.List;
 public class SWAPIResult {
 
     private int count;
-    private String next;
-    private String previous;
+    private int lastPage;
     private List<SWPlanet> results;
 
-    public SWAPIResult(int count, String next, String previous, List<SWPlanet> results) {
+    public SWAPIResult(int count, int lastPage, List<SWPlanet> results) {
         this.count = count;
-        this.next = next;
-        this.previous = previous;
+        this.lastPage = lastPage;
         this.results = results;
     }
-
 
     public int getCount() {
         return count;
     }
 
-    public String getNext() {
-        return next;
-    }
-
-    public String getPrevious() {
-        return previous;
+    public int getLastPage() {
+        return lastPage;
     }
 
     public List<SWPlanet> getResults() {

@@ -1,21 +1,38 @@
 package com.starWars.challenge.model;
 
-import java.util.List;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "planets")
 public class Planet {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
     private String climate;
     private String terrain;
-    private List<String> films;
 
-    public Planet(int id, String name, String climate, String terrain, List<String> films) {
+    @Column(name="films_count")
+    private int filmsCount;
+
+    public Planet() {
+    }
+
+    public Planet(int id, String name, String climate, String terrain, int filmsCount) {
         this.id = id;
         this.name = name;
         this.climate = climate;
         this.terrain = terrain;
-        this.films = films;
+        this.filmsCount = filmsCount;
+    }
+
+    public Planet(PlanetInput planetInput) {
+        this.name = planetInput.getName();
+        this.climate = planetInput.getClimate();
+        this.terrain = planetInput.getTerrain();
+        this.filmsCount = planetInput.getFilmsCount();
     }
 
     public int getId() {
@@ -34,13 +51,9 @@ public class Planet {
         return terrain;
     }
 
-    public List<String> getFilms() {
-        return films;
+    public int getFilmsCount() {
+        return filmsCount;
     }
-//
-//    public int getFilmsCount() {
-//        return films.size();
-//    }
 
 
     @Override
@@ -49,11 +62,11 @@ public class Planet {
         return  this.name.equals(planet.name) &&
                 this.climate.equals(planet.climate) &&
                 this.terrain.equals(planet.terrain) &&
-                this.films.equals(planet.films);
+                this.filmsCount == planet.filmsCount;
     }
 
     @Override
     public int hashCode() {
-        return this.name.hashCode() + this.climate.hashCode() + this.terrain.hashCode() + this.films.hashCode();
+        return this.name.hashCode() + this.climate.hashCode() + this.terrain.hashCode() + this.filmsCount;
     }
 }
