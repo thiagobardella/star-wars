@@ -7,6 +7,9 @@ public class PlanetInput {
     private String terrain;
     private int filmsCount;
 
+    public PlanetInput() {
+    }
+
     public PlanetInput(String name, String climate, String terrain, int filmsCount) {
         this.name = name;
         this.climate = climate;
