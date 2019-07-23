@@ -6,9 +6,9 @@ public class SWAPIResult {
 
     private int count;
     private int lastPage;
-    private List<SWPlanet> results;
+    private List<PlanetInput> results;
 
-    public SWAPIResult(int count, int lastPage, List<SWPlanet> results) {
+    public SWAPIResult(int count, int lastPage, List<PlanetInput> results) {
         this.count = count;
         this.lastPage = lastPage;
         this.results = results;
@@ -22,7 +22,7 @@ public class SWAPIResult {
         return lastPage;
     }
 
-    public List<SWPlanet> getResults() {
+    public List<PlanetInput> getResults() {
         return results;
     }
 }

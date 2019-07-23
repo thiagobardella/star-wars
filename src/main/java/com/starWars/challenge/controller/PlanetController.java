@@ -1,4 +1,4 @@
-package com.starWars.challenge.controllers;
+package com.starWars.challenge.controller;
 
 import com.google.gson.*;
 import com.starWars.challenge.model.DefaultAPIResponse;
@@ -6,8 +6,7 @@ import com.starWars.challenge.model.Planet;
 import com.starWars.challenge.model.PlanetInput;
 import com.starWars.challenge.model.SWAPIResult;
 import com.starWars.challenge.repository.PlanetRepository;
-import com.starWars.challenge.services.SWAPIResultDeserializer;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.starWars.challenge.service.SWAPIResultDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.*;
@@ -26,8 +25,11 @@ import static java.util.Collections.*;
 @PropertySource("swApi.properties")
 public class PlanetController {
 
-    @Autowired
-    PlanetRepository planetRepository;
+    private final PlanetRepository planetRepository;
+
+    public PlanetController(PlanetRepository planetRepository) {
+        this.planetRepository = planetRepository;
+    }
 
     @Value("${sw.api.url}")
     private String swApiURL;
@@ -62,14 +64,12 @@ public class PlanetController {
     @ResponseBody
     public SWAPIResult getPlanetsFromSWPublicAPI(@RequestParam(name="page", required = false) String page) {
         //TODO(Create a service to group this code below)
-        //TODO(paginate this search)
         try {
             String uri = swApiURL + "/planets";
             if (page != null) uri += "/?page=" + page;
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(singletonList(MediaType.APPLICATION_JSON));
-            //TODO(check the best header fot this)
             headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
             HttpEntity<String> request = new HttpEntity<>(headers);
             ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.GET, request, String.class);
