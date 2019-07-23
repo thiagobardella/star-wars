@@ -7,6 +7,8 @@ import com.starWars.challenge.model.PlanetInput;
 import com.starWars.challenge.model.SWAPIResult;
 import com.starWars.challenge.repository.PlanetRepository;
 import com.starWars.challenge.service.SWAPIResultDeserializer;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.*;
@@ -21,6 +23,7 @@ import static java.util.Collections.*;
 
 //TODO(discover a way to document this API automatically)
 @Controller
+//@Api(value = "Planets")
 @RequestMapping(value = "/api/v1/planets")
 @PropertySource("swApi.properties")
 public class PlanetController {
@@ -34,6 +37,7 @@ public class PlanetController {
     @Value("${sw.api.url}")
     private String swApiURL;
 
+//    @ApiOperation(value = "Application health checker")
     @GetMapping("/health")
     @ResponseBody
     public ResponseEntity<DefaultAPIResponse> health() {
